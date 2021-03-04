@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--mySQL-->
+    <bean id="d1" class="com.ZRS.dao.impl.DataSources">
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/empdb"/>
+        <property name="username" value="root"/>
+        <property name="password" value="12345"/>
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+    </bean>
+
+    <!--Oracle-->
+    <bean id="d2" class="com.ZRS.dao.impl.DataSources">
+        <property name="url" value="jdbc:oracle:oci8:@localhost:1521:orcl"/>
+        <property name="username" value="orcl"/>
+        <property name="password" value="12345"/>
+        <property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>
+    </bean>
+
+
+    <bean id="dao" class="com.ZRS.dao.impl.UserDaoImpl">
+        <property name="ds" ref="d1"/>
+    </bean>
+
+    <bean id="service" class="com.ZRS.service.impl.UserServiceImpl">
+        <property name="userDao" ref="dao"/>
+    </bean>
+
+    <bean id="controller" class="com.ZRS.controller.UserController">
+        <property name="userService" ref="service"/>
+    </bean>
+
+    <!--这种配置方式叫做 XML配置  后期开发使用注解配置!!!-->
+
+</beans>
